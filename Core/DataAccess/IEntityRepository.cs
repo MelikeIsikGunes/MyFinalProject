@@ -1,10 +1,11 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace DataAccess.Abstract
+namespace Core.DataAccess  //evrensel kodları core katmanına ekliyoruz - EVRENSEL KATMAN
+    // **Core katmanı diğer katmanları referans almaz
 {
     //generic constraint- jenerik kısıt
     //class: Referans tip
