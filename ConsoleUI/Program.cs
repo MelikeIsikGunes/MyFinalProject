@@ -12,7 +12,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //ProductManager productManager = new ProductManager(new InMemoryProductDal());
-            //DTO : Data Trasformation Object
+            
             ProductTest();
             //CategoryTest();
 
@@ -35,24 +35,33 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            foreach (var product in productManager.GetProductDetails()) 
+            var result = productManager.GetProductDetails();
+            if(result.Success==true)
             {
-                Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                foreach (var product in result.Data) 
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
 
 
 
-            //foreach (var product in productManager.GetByUnitPrice(40, 100)) //fiyatı min 40 max 100 olan ürünler
+            //foreach (var product in productManager.GetByUnitPrice(40, 100).Data) //fiyatı min 40 max 100 olan ürünler
             //{
             //   Console.WriteLine(product.ProductName);
             //}
 
-            //foreach (var product in productManager.GetAll())  //tüm ürünler
+            //foreach (var product in productManager.GetAll().Data)  //tüm ürünler
             //{
             //    Console.WriteLine(product.ProductName);
             //}
 
-            //foreach (var product in productManager.GetAllByCategoryId(2)) //2 nolu kategorideki ürünler
+            //foreach (var product in productManager.GetAllByCategoryId(2).Data) //2 nolu kategorideki ürünler
             //{
             //    Console.WriteLine(product.ProductName);
             //}
