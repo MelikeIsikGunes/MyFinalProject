@@ -13,7 +13,7 @@ namespace Business.Concrete
 {
     public class ProductManager : IProductService
     {
-        IProductDal _productDal;
+        IProductDal _productDal; //field oluşturmak - defaultu private
 
         public ProductManager(IProductDal productDal)
         {
@@ -40,7 +40,7 @@ namespace Business.Concrete
             //İş kodları
             //if kodları
 
-            if (DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour == 1)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
