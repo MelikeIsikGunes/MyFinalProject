@@ -29,11 +29,7 @@ namespace Business.Concrete
         {
             //eklemeden önce kuralları buraya yazarız-business codes
             //validation-doğrulama-->nesnenin yapısıyla ilgili olan şeyler
-
-            
-            ValidationTool.Validate(new ProductValidator(),product); 
-            
-            
+          
             _productDal.Add(product);
 
             return new SuccessResult(Messages.ProductAdded);
