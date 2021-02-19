@@ -1,4 +1,4 @@
-using Business.Abstract;
+ï»¿using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -29,13 +29,13 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Autofac, Ninject, CastleWindsor, StructureMap, LightInject, DryInject ->IoC Container altyapýsý sunuyorlar
+            //Autofac, Ninject, CastleWindsor, StructureMap, LightInject, DryInject ->IoC Container altyapï¿½sï¿½ sunuyorlar
             services.AddControllers();
             //services.AddSingleton<IProductService, ProductManager>(); //IoC Container
-            //constructer'de IProductService istendiðinde bizim yerimize ProductManager newliyor. 
+            //constructer'de IProductService istendiï¿½inde bizim yerimize ProductManager newliyor. 
             //services.AddSingleton<IProductDal, EfProductDal>();
             
-            //Bunlarý business katmanýna ekledik Autofac klasöründe
+            //BunlarÄ± business katmanÄ±na ekledik Autofac klasÃ¶rÃ¼nde
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
