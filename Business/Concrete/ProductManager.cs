@@ -33,15 +33,6 @@ namespace Business.Concrete
             
             ValidationTool.Validate(new ProductValidator(),product); 
             
-
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
-            
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
-            
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
             
             _productDal.Add(product);
 
