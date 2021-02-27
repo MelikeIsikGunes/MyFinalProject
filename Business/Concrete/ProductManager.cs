@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -28,6 +29,10 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
+        //Encrytion, Hashing, Salting
+        //örneğin parolaları db'de açık tutmak yerine şifreleme yöntemi ile tutmak(hashlemek)
+        
+        [SecuredOperation("product.add")]  //Yetkilendirme kontrolü.  product.add -> claim
         [ValidationAspect(typeof( ProductValidator))]
         public IResult Add(Product product)
         {
