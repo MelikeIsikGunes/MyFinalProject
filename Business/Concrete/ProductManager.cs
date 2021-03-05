@@ -3,6 +3,9 @@ using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
@@ -32,8 +35,9 @@ namespace Business.Concrete
         //Encrytion, Hashing, Salting
         //örneğin parolaları db'de açık tutmak yerine şifreleme yöntemi ile tutmak(hashlemek)
         
-        [SecuredOperation("product.add")]  //Yetkilendirme kontrolü.  product.add -> claim
+        [SecuredOperation("product.add, admin")]  //Yetkilendirme kontrolü.  product.add -> claim
         [ValidationAspect(typeof( ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")] //yeni ürün eklenince Get ile başlayanları bellekten sil
         public IResult Add(Product product)
         {
             //eklemeden önce kuralları buraya yazarız-business codes (Örn: Bir kategoride max 10 ürün olsun)
@@ -53,6 +57,7 @@ namespace Business.Concrete
           
         }
 
+        [CacheAspect] //key,value
         public IDataResult<List<Product>> GetAll()
         {
             //İş kodları
@@ -71,6 +76,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p=>p.CategoryId==id));
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)] //bu metotun çalışması 5 sn geçerse beni uyar
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
@@ -87,6 +94,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")] //ürün güncellendiği zaman IProductService'deki tüm Get olan metotları bellekten sil
         public IResult Update(Product product)
         {
             var result = _productDal.GetAll(p => p.CategoryId == product.CategoryId).Count;
@@ -127,8 +135,16 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        
-       
-        
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            Add(product);
+            if(product.UnitPrice<10)
+            {
+                throw new Exception("");
+            }
+            Add(product);
+            return null;
+        }
     }
 }

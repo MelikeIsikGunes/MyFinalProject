@@ -17,5 +17,7 @@ namespace Business.Abstract
         IResult Add(Product product); //void yerine IResult diyoruz
         IResult Update(Product product);
 
+        IResult AddTransactionalTest(Product product);
+
     }
 }

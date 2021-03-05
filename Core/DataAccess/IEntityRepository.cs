@@ -17,5 +17,6 @@ namespace Core.DataAccess  //evrensel kodları core katmanına ekliyoruz - EVREN
         T Get(Expression<Func<T, bool>> filter); //tek bir veri getirmek için. Detaylara gitmek için kullanılabilir.
         void Add(T entity);
         void Update(T entity);
-        void Delete(T entity);    }
+        void Delete(T entity);   
+    }
 }

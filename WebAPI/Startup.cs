@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -7,6 +10,7 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +45,7 @@ namespace WebAPI
 
             //Bunları business katmanına ekledik Autofac klasöründe
 
-
+            
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); //biz ekledik
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //biz ekledik
@@ -58,6 +62,9 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+            services.AddDependencyResolvers(new ICoreModule[] {
+                new CoreModule()
+            }); //Başka bir gün yeni bir modül eklersek buraya ekleyebiliriz.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +79,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication(); //biz ekledik
+            app.UseAuthentication(); //biz ekledik - middleware
 
             app.UseAuthorization();
 

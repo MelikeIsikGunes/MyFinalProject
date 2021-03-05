@@ -20,7 +20,7 @@ namespace Core.Utilities.Security.JWT
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); ////appsettings.json'daki TokenOptions Bölümündekileri, TokenOptions nesnemizdeki proplar ile eşle
+            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); //appsettings.json'daki TokenOptions Bölümündekileri, TokenOptions nesnemizdeki proplar ile eşle
 
         }
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
