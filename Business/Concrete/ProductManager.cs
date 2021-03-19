@@ -63,7 +63,7 @@ namespace Business.Concrete
             //İş kodları
             //if kodları
 
-            if (DateTime.Now.Hour == 1)
+            if (DateTime.Now.Hour == 3)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }

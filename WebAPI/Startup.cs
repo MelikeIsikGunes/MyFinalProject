@@ -45,7 +45,8 @@ namespace WebAPI
 
             //Bunları business katmanına ekledik Autofac klasöründe
 
-            
+            services.AddCors();
+
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); //biz ekledik
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //biz ekledik
@@ -74,6 +75,8 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:4200").AllowAnyHeader()); //biz ekledik. Bu adresten herhangi bir istek(get,post..) gelirse izin ver
 
             app.UseHttpsRedirection();
 
