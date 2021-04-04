@@ -35,7 +35,7 @@ namespace Business.Concrete
         //Encrytion, Hashing, Salting
         //örneğin parolaları db'de açık tutmak yerine şifreleme yöntemi ile tutmak(hashlemek)
         
-        //[SecuredOperation("product.add, admin")]  //Yetkilendirme kontrolü.  product.add -> claim
+        [SecuredOperation("product.add, admin")]  //Yetkilendirme kontrolü.  product.add -> claim
         [ValidationAspect(typeof( ProductValidator))]
         [CacheRemoveAspect("IProductService.Get")] //yeni ürün eklenince Get ile başlayanları bellekten sil
         public IResult Add(Product product)
